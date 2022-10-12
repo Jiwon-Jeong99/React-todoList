@@ -9,9 +9,13 @@ function ToDo({ text, category, id }: IToDo) {
       //props로부터 오는 id와 toDo.id가 같은지 확인
       const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
       const oldToDo = oldToDos[targetIndex];
-      const newToDo = { text, id, newCategory };
-      console.log(oldToDo, newToDo);
-      return oldToDos;
+      //   props니까 그냥 text.text할 필요 없이 text만 적어도 됨
+      const newToDo = { text, id, category:newCategory };
+      return [
+        ...oldToDos.slice(0, targetIndex),
+        newToDo,
+        ...oldToDos.slice(targetIndex + 1),
+      ];
     });
   };
   return (
