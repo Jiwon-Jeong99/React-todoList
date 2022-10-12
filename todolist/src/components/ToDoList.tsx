@@ -1,50 +1,20 @@
 import { useForm } from "react-hook-form";
-import { atom, useRecoilState } from "recoil";
-
-interface IForm {
-  toDo: string;
-}
-
-interface IToDo {
-  text: string;
-  id: number;
-  category: "TO_DO" | "DOING" | "DONE";
-}
-
-//atom
-const toDoState = atom<IToDo[]>({
-  key: "toDo",
-  default: [],
-});
+import { atom, useRecoilState, useRecoilValue } from "recoil";
+import { toDoState } from "../atoms";
+import CreateToDo from "./CreateToDo";
+import ToDo from "./ToDo";
 
 function ToDoList() {
-  //atom의 값을 가져옴
-  const [toDos, setToDos] = useRecoilState(toDoState);
-  const { register, handleSubmit, setValue } = useForm<IForm>();
-  const handleValid = ({ toDo }: IForm) => {
-    //이전의 state를 받아서(oldToDos도 IToDo[]를 상속받으니 배열임) new state 리턴
-    setToDos((oldToDos) => [
-      { text: toDo, id: Date.now(), category: "TO_DO" },
-      ...oldToDos,
-    ]);
-    setValue("toDo", "");
-  };
+  // 값을 가져오기만 하면 됨
+  const toDos = useRecoilValue(toDoState);
   return (
     <div>
       <h1>To Dos</h1>
-      <hr />
-      <form onSubmit={handleSubmit(handleValid)}>
-        <input
-          {...register("toDo", {
-            required: "Please write a To Do",
-          })}
-          placeholder="Write a to do"
-        />
-        <button>Add</button>
-      </form>
+      <CreateToDo />
       <ul>
         {toDos.map((toDo) => (
-          <li key={toDo.id}>{toDo.text}</li>
+          <ToDo key={toDo.id} {...toDo} />
+          // <ToDo text={toDo.text} category={toDo.category} id={toDo.id} />
         ))}
       </ul>
     </div>
