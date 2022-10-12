@@ -1,4 +1,4 @@
-import { IToDo, toDoState } from "../atoms";
+import { Categories, IToDo, toDoState } from "../atoms";
 import { useSetRecoilState } from "recoil";
 
 function ToDo({ text, category, id }: IToDo) {
@@ -10,7 +10,7 @@ function ToDo({ text, category, id }: IToDo) {
       const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
       const oldToDo = oldToDos[targetIndex];
       //   props니까 그냥 text.text할 필요 없이 text만 적어도 됨
-      const newToDo = { text, id, category:newCategory };
+      const newToDo = { text, id, category: newCategory };
       return [
         ...oldToDos.slice(0, targetIndex),
         newToDo,
@@ -22,14 +22,14 @@ function ToDo({ text, category, id }: IToDo) {
     <li>
       <span>{text}</span>
       {/* onclick하면 인자가 넘어갈 수 있도록 함수형태로 */}
-      {category !== "TO_DO" && (
-        <button onClick={() => onClick("TO_DO")}>To Do</button>
+      {category !== Categories.TO_DO && (
+        <button onClick={() => onClick(Categories.TO_DO)}>To Do</button>
       )}
-      {category !== "DOING" && (
-        <button onClick={() => onClick("DOING")}>Doing</button>
+      {category !== Categories.DOING && (
+        <button onClick={() => onClick(Categories.DOING)}>Doing</button>
       )}
-      {category !== "DONE" && (
-        <button onClick={() => onClick("DONE")}>Done</button>
+      {category !== Categories.DONE && (
+        <button onClick={() => onClick(Categories.DONE)}>Done</button>
       )}
     </li>
   );
