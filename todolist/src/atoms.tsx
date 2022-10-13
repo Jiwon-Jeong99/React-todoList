@@ -3,9 +3,9 @@ import { atom, selector } from "recoil";
 //enum은 사실...인덱스를....값으로 표현해주는 그런 거였다..
 //TO_DO는 사실 숫자 0임
 export enum Categories {
-  "TO_DO"="TO_DO",
-  "DOING"="DOING",
-  "DONE"="DONE",
+  "TO_DO" = "TO_DO",
+  "DOING" = "DOING",
+  "DONE" = "DONE",
 }
 
 export interface IToDo {
